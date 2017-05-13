@@ -1,13 +1,18 @@
 import angular from 'angular';
 import 'angular-ui-router';
-import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
-import 'normalize.css';
+// import ngMaterial from 'angular-material/angular-material';
+// import 'angular-material/angular-material';
+// import 'normalize.css';
+// import 'bulma/css/bulma.css!';
+import 'angularjs-datepicker';
+import 'angularjs-datepicker/dist/angular-datepicker.css!';
+
 
 let appModule = angular.module('app', [
 	'ui.router',
-	Common.name,
+    // 'ngMaterial',
 	Components.name
 ])
 .directive('app', AppComponent);

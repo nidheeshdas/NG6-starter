@@ -46,6 +46,10 @@ gulp.task('serve', function(){
 		),
 		server: {
 			baseDir: root,
+            middleware: function (req, res, next) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                next();
+            },
 			// serve our jspm dependencies with the client folder
 			routes: {
 				'/jspm.config.js': './jspm.config.js',

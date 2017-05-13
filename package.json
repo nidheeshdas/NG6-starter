@@ -2,10 +2,12 @@
   "name": "angular-jspm-starter",
   "version": "0.0.1",
   "description": "starter",
-  "dependencies": {},
+  "dependencies": {
+    "angularjs-datepicker": "^2.1.19"
+  },
   "scripts": {
     "test": "karma start",
-    "postinstall": "jspm install"
+    "postinstall": "true || jspm install"
   },
   "keywords": [
     "angular",
@@ -22,9 +24,10 @@
     "dependencies": {
       "angular": "github:angular/bower-angular@^1.4.0",
       "angular-mocks": "npm:angular-mocks@^1.4.0",
-      "angular-ui-router": "github:angular-ui/ui-router@^0.2.15",
-      "capaj/systemjs-hot-reloader": "github:capaj/systemjs-hot-reloader@^0.5.0",
-      "css": "github:systemjs/plugin-css@^0.1.11",
+      "angular-ui-router": "npm:angular-ui/ui-router@^0.3.2",
+      "angularjs-datepicker": "npm:angularjs-datepicker@^2.1.19",
+      "capaj/systemjs-hot-reloader": "github:alexisvincent/systemjs-hot-reloader@^0.5.0",
+      "css": "github:systemjs/plugin-css@^0.1.33",
       "normalize.css": "github:necolas/normalize.css@^3.0.3",
       "text": "github:systemjs/plugin-text@^0.0.2"
     },
