@@ -180,3 +180,48 @@ enjoy -- **AngularClass**
 [![AngularClass](https://cloud.githubusercontent.com/assets/1016365/9863770/cb0620fc-5af7-11e5-89df-d4b0b2cdfc43.png "Angular Class")](https://angularclass.com)
 ##[AngularClass](https://angularclass.com)
 > Learn Angular in 2 days from the best
+
+# Shopify template code
+
+```html
+<div id="subs_editor">
+    <div>
+        <div id="app-container">
+          <app></app>
+        </div>
+    </div>
+    <script type="text/javascript">
+      window.api_params = {
+        email: "{{ customer.email }}",
+        hash: "{{ customer.email | append: '5hfgsh8hsRRh378yghssljkhsf7ty4r' | md5 }}",
+        from: "shopify_customer_dashboard",
+        customerId: "{{ customer.id }}",
+        shopifyOrderId: "{{ order.id }}"
+      };
+      var qd = {};
+      if (location.search) location.search.substr(1).split("&").forEach(function(item) {
+        var s = item.split("="), k = s[0], v = s[1] && decodeURIComponent(s[1]); 
+        (qd[k] = qd[k] || []).push(v)
+      });
+    
+      if (qd.DEVMODE && !window.editorLoaded) {
+        window.editorLoaded = true;
+        function addScript(source, callback) {
+            var tag = document.createElement("script");
+            tag.type = "text/javascript";
+            document.getElementsByTagName("head")[0].appendChild(tag);
+    //		    	tag.onload = callback;
+            tag.src = source;
+            tag.addEventListener('load', callback);
+        }
+        addScript('https://localhost/jspm_packages/system.js', function () {
+            console.log('loaded system.js');
+            addScript('https://localhost/jspm.config.js', function () {
+              console.log('loaded config.js');
+              System.import('https://localhost/app/app').catch(console.error.bind(console));
+            });
+        });
+      }	
+    </script>
+</div>
+```

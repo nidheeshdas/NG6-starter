@@ -15,3 +15,28 @@
 .home {
 
 }
+
+.btc-order-editor select {
+    color: white;
+}
+
+.btc-order-editor tbody {
+    border-bottom: 1px solid #656565;
+}
+
+.btc-order-editor .label {
+    color: #10b3c6;
+    background: rgba(0,0,0,0);
+    font-weight: bold;
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-transform: uppercase;
+}
+
+.btc-order-editor td {
+    vertical-align: top;
+}
+
+div.label + .button {
+    margin-top: 0;
+}
+

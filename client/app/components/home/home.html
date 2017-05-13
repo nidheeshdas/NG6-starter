@@ -1,1 +1,60 @@
-<h1>Yo Editor</h1>
+<div class="btc-order-editor">
+    <div ng-if="childOrders && childOrders.length > 0">
+        <h2>Deliveries</h2>
+
+        <div class="table-wrap">
+            <table class="full">
+                <thead>
+                <!--<tr>-->
+                    <!--<th>Shipping Address</th>-->
+                    <!--<th>Order</th>-->
+                    <!--<th></th>-->
+                <!--</tr>-->
+                </thead>
+                <tbody ng-repeat="childOrder in childOrders">
+                <tr ng-repeat="subItem in childOrder.orderItems[0].product.subItems">
+                    <td>
+                        <div class="label">Ship To</div>
+                        <div class="row" style="word-wrap:break-word;">
+                            {{order.shippingAddress.name}}
+                        </div>
+                        <div class="row" style="word-wrap:break-word;">
+                            {{order.shippingAddress.address1}},
+                            {{order.shippingAddress.address2}},
+                            {{order.shippingAddress.city.cityName}}
+                        </div>
+                        <div class="row " style="word-wrap:break-word;">
+                            {{order.shippingAddress.state}},
+                            {{order.shippingAddress.postalCode}}
+                        </div>
+                        <div class="row form-group" style="word-wrap:break-word;">
+                            <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                            <span>{{order.shippingAddress.phone}}</span>
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="label">Coffee</div>
+                        <select ng-options="c as c.name for c in coffees track by id" ng-model="subItem.coffee">
+                        </select> <br/><br/>
+                        <div class="label">Grind</div>
+                        <select ng-options="g as g.name for g in grinds track by id" ng-model="subItem.grind">
+                        </select> <br/><br/>
+                        <div class="label">Grind</div>
+                        <select ng-options="g as g.name for g in grinds track by id" ng-model="subItem.grind">
+                        </select> <br/>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button class="button button-white">Change Address</button>
+                        <button class="button button-white" style="float: right">Update Delivery</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
