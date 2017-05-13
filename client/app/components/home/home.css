@@ -26,9 +26,9 @@
 
 .btc-order-editor .label {
     color: #10b3c6;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     font-weight: bold;
-    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
 }
 
@@ -38,5 +38,17 @@
 
 div.label + .button {
     margin-top: 0;
+}
+
+.static-info {
+    display: none;
+}
+
+.order--fulfilled .static-info {
+    display: block;
+}
+
+.order--fulfilled select {
+    display: none;
 }
 

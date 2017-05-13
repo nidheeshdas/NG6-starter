@@ -13,6 +13,7 @@ import Config from "./app.config";
 let appModule = angular.module('app', [
     'ui.router',
     // 'ngMaterial',
+    '720kb.datepicker',
     Components.name
 ])
     .directive('app', AppComponent)

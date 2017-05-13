@@ -6,12 +6,13 @@
             <table class="full">
                 <thead>
                 <!--<tr>-->
-                    <!--<th>Shipping Address</th>-->
-                    <!--<th>Order</th>-->
-                    <!--<th></th>-->
+                <!--<th>Shipping Address</th>-->
+                <!--<th>Order</th>-->
+                <!--<th></th>-->
                 <!--</tr>-->
                 </thead>
-                <tbody ng-repeat="childOrder in childOrders">
+                <tbody ng-repeat="childOrder in childOrders"
+                       ng-class="{'order--fulfilled': childOrder.fulfillment_status=='fulfilled'}">
                 <tr ng-repeat="subItem in childOrder.orderItems[0].product.subItems">
                     <td>
                         <div class="label">Ship To</div>
@@ -35,17 +36,28 @@
                     </td>
                     <td>
                         <div class="label">Coffee</div>
-                        <select ng-options="c as c.name for c in coffees track by id" ng-model="subItem.coffee">
-                        </select> <br/><br/>
+                        <select ng-options="c as c.name for c in coffees track by id"
+                                ng-model="subItem.coffee">
+                        </select>
+                        <div class="static-info">
+                            {{ subItem.coffee.name }}
+                        </div>
+                        <br/><br/>
                         <div class="label">Grind</div>
                         <select ng-options="g as g.name for g in grinds track by id" ng-model="subItem.grind">
-                        </select> <br/><br/>
-                        <div class="label">Grind</div>
-                        <select ng-options="g as g.name for g in grinds track by id" ng-model="subItem.grind">
-                        </select> <br/>
-
+                        </select>
+                        <div class="static-info">
+                            {{ subItem.grind.name }}
+                        </div>
+                        <br/><br/>
+                        <div class="label">Roast on</div>
+                        <datepicker date-disabled-weekdays="[2, 3, 5, 6, 7]">
+                            <input ng-model="$parent.childOrder.processedAt" type="text"/>
+                        </datepicker>
+                        <div class="static-info">
+                            {{ $parent.childOrder.processedAt }}
+                        </div>
                     </td>
-
                 </tr>
                 <tr>
                     <td colspan="2">

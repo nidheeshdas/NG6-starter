@@ -225,3 +225,7 @@ enjoy -- **AngularClass**
     </script>
 </div>
 ```
+
+```sql
+select convert_tz(o.order_created_date, '+00:00', '+05:00') as date, group_concat(o.order_name separator ', ') as orderName, substring(c.comment, 26) as c from order_item oi inner join customer_order o on oi.customer_order_id = o.id inner join comments c on c.order_id = o.id where oi.product is null and o.order_created_date > '2017-05-01 00:00:00' and o.total_price not in (500, 1000) and c.comment like '%no such product%' group by c;
+```
