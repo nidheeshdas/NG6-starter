@@ -52,3 +52,52 @@ div.label + .button {
     display: none;
 }
 
+.account-page {
+    background-attachment: fixed;
+}
+
+/* calendar */
+datepicker input {
+    border: 1px solid white !important;
+    background-color: transparent !important;
+    color: white;
+}
+
+._720kb-datepicker-calendar._720kb-datepicker-open {
+    background-color: black;
+    border: 1px solid white;
+}
+
+a._720kb-datepicker-calendar-day {
+    color: #ffffff !important;
+}
+
+a._720kb-datepicker-calendar-day._720kb-datepicker-disabled {
+    color: #656565 !important;
+}
+
+._720kb-datepicker-calendar-header:nth-child(odd) {
+    background: #0fb1c4;
+}
+
+._720kb-datepicker-calendar {
+    border-radius: 0px;
+    margin-left: 0;
+    width: 100%;
+}
+
+.order_ordinal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+    background: white;
+    width: 40px;
+    height: 2em;
+    color: black;
+    font-weight: bold;
+}
+
+.order_ordinal + div {
+    margin-top: 2em;
+}

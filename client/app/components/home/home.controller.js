@@ -53,7 +53,9 @@ class HomeController {
     }
 
     updateOrder(order) {
-        this.$http.put('/api/patrons/orders', order)
+        let v = JSON.parse(JSON.stringify(order));
+        v.processedAt = new Date(order.processedAt + ' 15:30').toISOString();
+        this.$http.put('/api/patrons/orders', v)
             .then((response) => {
                     alert("Order successfully updated.");
                 },
