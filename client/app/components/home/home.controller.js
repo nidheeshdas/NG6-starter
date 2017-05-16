@@ -1,15 +1,18 @@
 class HomeController {
     /*@ngInject*/
 
-    constructor($scope, $http) {
+    constructor($scope, $http, $filter) {
         this.name = 'home';
         this.$http = $http;
         this.$scope = $scope;
+        this.$filter = $filter;
 
         this.getOrderDetails();
         this.getCoffees();
         this.getGrinds();
         this.getGeneratedOrders();
+
+        this.$scope.today = new Date();
     }
 
     getOrderDetails() {
@@ -47,8 +50,20 @@ class HomeController {
         this.$http.get('/api/patrons/orders/getGeneratedOrdersByShopifyOrderId/?shopifyOrderId=' + window.api_params.shopifyOrderId).then((response) => {
             this.$scope.childOrders = response.data;
             angular.forEach(this.$scope.childOrders, (v, k) => {
-                v.processedAt = new Date(v.processedAt);
-            })
+                if (+new Date() > +new Date(v.processedAt)) {
+                    v.fulfillment_status = 'fulfilled';
+                }
+                v.processedAt = this.$filter('date')(v.processedAt, 'MMMM d yyyy');
+            });
+
+            // test
+            // {
+            //    this.$scope.childOrders[0].fulfillments = [{
+            //        trackingNumber: '#fskhdufsd',
+            //        trackingUrl: 'https://google.com',
+            //        trackingCompany: 'FedEx'
+            //    }]
+            // }
         });
     }
 

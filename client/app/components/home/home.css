@@ -48,7 +48,7 @@ div.label + .button {
     display: block;
 }
 
-.order--fulfilled select {
+.order--fulfilled select, .order--fulfilled datepicker, .order--fulfilled button, .order--fulfilled .fulfilled-hidden {
     display: none;
 }
 
@@ -84,6 +84,10 @@ a._720kb-datepicker-calendar-day._720kb-datepicker-disabled {
     border-radius: 0px;
     margin-left: 0;
     width: 100%;
+}
+
+._720kb-datepicker-calendar-day:hover, ._720kb-datepicker-calendar-day._720kb-datepicker-active {
+    background: rgb(15, 177, 196);
 }
 
 .order_ordinal {

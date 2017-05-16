@@ -20,42 +20,56 @@
                         </div>
                         <div class="label">Ship To</div>
                         <div class="row" style="word-wrap:break-word;">
-                            {{order.shippingAddress.name}}
+                            {{childOrder.shippingAddress.name}}
                         </div>
                         <div class="row" style="word-wrap:break-word;">
-                            {{order.shippingAddress.address1}},
-                            {{order.shippingAddress.address2}},
-                            {{order.shippingAddress.city.cityName}}
+                            {{childOrder.shippingAddress.address1}},
+                            {{childOrder.shippingAddress.address2}},
+                            {{childOrder.shippingAddress.city.cityName}}
                         </div>
                         <div class="row " style="word-wrap:break-word;">
-                            {{order.shippingAddress.state}},
-                            {{order.shippingAddress.postalCode}}
+                            {{childOrder.shippingAddress.state}},
+                            {{childOrder.shippingAddress.postalCode}}
                         </div>
                         <div class="row form-group" style="word-wrap:break-word;">
                             <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-                            <span>{{order.shippingAddress.phone}}</span>
+                            <span>{{childOrder.shippingAddress.phone}}</span>
 
+                        </div>
+                        <div ng-if="childOrder.fulfillments.length > 0" style="margin-top: 2em">
+                            <div class="label">Courier</div>
+                            <div>{{ childOrder.fulfillments[0].trackingCompany }}</div>
+                            <br/>
+                            <div class="label">Tracking ID</div>
+                            <div>
+                                <a href="{{ childOrder.fulfillments[0].trackingUrl }}"
+                                   style="text-decoration: underline;">
+                                    {{ childOrder.fulfillments[0].trackingNumber }}
+                                </a>
+                            </div>
                         </div>
                     </td>
                     <td>
                         <div class="label">Coffee</div>
-                        <select ng-options="c as c.name for c in coffees track by id"
+                        <select ng-options="c as c.name for c in coffees track by c.id"
                                 ng-model="subItem.coffee">
                         </select>
                         <div class="static-info">
                             {{ subItem.coffee.name }}
                         </div>
-                        <br/><br/>
+                        <br/><br class="fulfilled-hidden"/>
                         <div class="label">Grind</div>
-                        <select ng-options="g as g.name for g in grinds track by id" ng-model="subItem.grind">
+                        <select ng-options="g as g.name for g in grinds track by g.id" ng-model="subItem.grind">
                         </select>
                         <div class="static-info">
                             {{ subItem.grind.name }}
                         </div>
-                        <br/><br/>
+                        <br/><br class="fulfilled-hidden"/>
                         <div class="label">Roast on</div>
                         <datepicker date-disabled-weekdays="[1, 2, 4, 5, 6]" date-format="MMMM d yyyy"
-                                    date-set="{{ $parent.childOrder.processedAt | date:'MMMM d yyyy' }}">
+                                    date-set="{{ $parent.childOrder.processedAt | date:'MMMM d yyyy' }}"
+                                    date-min-limit="{{ today.toISOString() }}"
+                        >
                             <input ng-model="$parent.childOrder.processedAt" type="text"/>
                         </datepicker>
                         <div class="static-info">
@@ -65,7 +79,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button class="button button-white">Change Address</button>
+                        <!--<button class="button button-white">Change Address</button>-->
                         <button class="button button-white" style="float: right" ng-click="vm.updateOrder(childOrder)">
                             Update Delivery
                         </button>
