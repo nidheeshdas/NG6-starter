@@ -31,5 +31,5 @@ function conf($httpProvider) {
 
 export default {
     customHttpInterceptor,
-    conf
+    conf: ['$httpProvider', conf]
 }

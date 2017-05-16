@@ -204,16 +204,18 @@ enjoy -- **AngularClass**
         (qd[k] = qd[k] || []).push(v)
       });
     
+      function addScript(source, callback) {
+        var tag = document.createElement("script");
+        tag.type = "text/javascript";
+        document.getElementsByTagName("head")[0].appendChild(tag);
+        //		    	tag.onload = callback;
+        tag.src = source;
+        tag.addEventListener('load', callback);
+      }
+    
       if (qd.DEVMODE && !window.editorLoaded) {
         window.editorLoaded = true;
-        function addScript(source, callback) {
-            var tag = document.createElement("script");
-            tag.type = "text/javascript";
-            document.getElementsByTagName("head")[0].appendChild(tag);
-    //		    	tag.onload = callback;
-            tag.src = source;
-            tag.addEventListener('load', callback);
-        }
+        
         addScript('https://localhost/jspm_packages/system.js', function () {
             console.log('loaded system.js');
             addScript('https://localhost/jspm.config.js', function () {
@@ -221,7 +223,9 @@ enjoy -- **AngularClass**
               System.import('https://localhost/app/app').catch(console.error.bind(console));
             });
         });
-      }	
+      } else {
+        addScript('https://btc-wp-content.s3.amazonaws.com/btc-order-editor/app.min.js');
+      }
     </script>
 </div>
 ```

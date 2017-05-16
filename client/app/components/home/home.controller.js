@@ -1,6 +1,10 @@
 class HomeController {
     /*@ngInject*/
 
+    static get $inject() {
+        return ['$scope', '$http', '$filter'];
+    }
+
     constructor($scope, $http, $filter) {
         this.name = 'home';
         this.$http = $http;
