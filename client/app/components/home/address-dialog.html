@@ -10,16 +10,67 @@
                 <h4 class="modal-title">Change Address</h4>
             </div>
 
-            <div class="modal-body">
-
-                <pre>{{ctrl.data}}</pre>
-
+            <div class="modal-body oh">
+                <div class="fl fifty pr1">
+                    <div class="oh">
+                        <div class="fl fifty pr1">
+                            <div class="label">First Name</div>
+                            <input ng-model="address.firstName" class="w100 mb1"/>
+                        </div>
+                        <div class="fl fifty">
+                            <div class="label">Last Name</div>
+                            <input ng-model="address.lastName" class="w100 mb1"/>
+                        </div>
+                    </div>
+                    <div class="label">Address 1</div>
+                    <input ng-model="address.street" class="w100 mb1"/>
+                    <div class="label">Address 2</div>
+                    <input ng-model="address.address1" class="w100 mb1"/>
+                    <div class="label">Address 3</div>
+                    <input ng-model="address.address2" class="w100 mb1"/>
+                    <div class="oh">
+                        <div class="fl fifty">
+                            <div class="label">City</div>
+                            <input ng-model="address.city.cityName" class="w100 mb1"/>
+                        </div>
+                        <div class="fl fifty">
+                            <div class="label">State</div>
+                            <input ng-model="address.state" class="w100 mb1"/>
+                        </div>
+                    </div>
+                    <div class="oh">
+                        <div class="fl fifty pr1">
+                            <div class="label">Country</div>
+                            <input ng-model="address.country" class="w100 mb1"/>
+                        </div>
+                        <div class="fl fifty pr1">
+                            <div class="label">Postal Code</div>
+                            <input ng-model="address.postalCode" class="w100 mb1"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="fl fifty">
+                    <ul class="list">
+                        <li class="list-item" ng-repeat="address in addresses">
+                            <h6 ng-hide="address.name">{{ address.firstName }} &nbsp; {{ address.lastName }}</h6>
+                            <h6 ng-show="address.name">{{ address.name }}</h6>
+                            {{ address.street }}, {{ address.address1 }}, {{ address.address2 }} <br/>
+                            {{ address.city.cityName }}, {{ address.state }}, {{ address.country }} <br/>
+                            {{ address.postalCode }}
+                            <a href="" class="btn" ng-click="useThis(address)">Use this</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button"
                         class="btn btn-default"
-                        ng-click="ctrl.clickClose(ctrl.data)">Close
+                        ng-click="ctrl.save()">Save
+                </button>
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="ctrl.clickClose()">Close
                 </button>
             </div>
 

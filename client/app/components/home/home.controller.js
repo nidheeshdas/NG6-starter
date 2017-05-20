@@ -131,12 +131,16 @@ class HomeController {
             template: addressDialogTemplate,
             controller: ['$modal', 'address', 'addresses', function ($modal, address, addresses) {
                 var ctrl = this;
-
+                var cityName = address.city.cityName;
                 ctrl.address = address;
                 ctrl.addresses = addresses;
-
-                ctrl.clickClose = function (address) {
-                    $modal.close(address);
+                ctrl.save = function () {
+                    if (cityName != ctrl.address.city.cityName) {
+                        ctrl.address.city.id = null;
+                    }
+                };
+                ctrl.clickClose = function () {
+                    $modal.close(ctrl.address);
                 };
             }],
             controllerAs: 'ctrl',
@@ -144,15 +148,16 @@ class HomeController {
                 address: childOrder.shippingAddress,
                 addresses: this.$scope.addresses
             }
-        }).then(function (modal) {
-            modal.result.then(function (data) {
-                console.log(data);
+        }).then((modal) => {
+            modal.result.then((address) => {
+                this.$scope.order.shippingAddress = address;
+                console.log(address);
             })
         });
     }
 
     getMyAddresses() {
-        this.$http.get('/api/patron/my-addresses').then((response) => {
+        this.$http.get('/api/patrons/myaddresses').then((response) => {
             this.$scope.addresses = response.data;
         })
     }
