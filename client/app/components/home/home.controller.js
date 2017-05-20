@@ -131,27 +131,31 @@ class HomeController {
             template: addressDialogTemplate,
             controller: ['$modal', 'address', 'addresses', function ($modal, address, addresses) {
                 var ctrl = this;
-                var cityName = address.city.cityName;
                 ctrl.address = address;
+                var cityName = ctrl.address.city.cityName;
                 ctrl.addresses = addresses;
                 ctrl.save = function () {
                     if (cityName != ctrl.address.city.cityName) {
                         ctrl.address.city.id = null;
                     }
+                    $modal.close(ctrl.address);
                 };
                 ctrl.clickClose = function () {
-                    $modal.close(ctrl.address);
+                    $modal.close(null);
                 };
             }],
             controllerAs: 'ctrl',
             inputs: {
-                address: childOrder.shippingAddress,
+                address: JSON.parse(JSON.stringify(childOrder.shippingAddress)),
                 addresses: this.$scope.addresses
             }
         }).then((modal) => {
             modal.result.then((address) => {
-                this.$scope.order.shippingAddress = address;
-                console.log(address);
+                if (address != null) {
+                    console.log(address);
+                    this.$scope.order.shippingAddress = address;
+                    this.updateOrder(this.$scope.order);
+                }
             })
         });
     }
