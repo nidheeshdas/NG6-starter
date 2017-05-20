@@ -1,0 +1,29 @@
+<div class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button class="right btn btn-default btn-sm btn-round"
+                        ng-click="$modal.dismiss()">
+                    <span class="fa fa-close"></span>
+                </button>
+                <h4 class="modal-title">Change Address</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <pre>{{ctrl.data}}</pre>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="ctrl.clickClose(ctrl.data)">Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop" ng-click="$modal.dismiss()"></div>

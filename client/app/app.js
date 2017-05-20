@@ -7,6 +7,7 @@ import AppComponent from "./app.component";
 // import 'normalize.css';
 // import 'bulma/css/bulma.css!';
 import "./util/modal";
+import "./util/modal.css!";
 import "angularjs-datepicker";
 import "angularjs-datepicker/dist/angular-datepicker.css!";
 import Config from "./app.config";

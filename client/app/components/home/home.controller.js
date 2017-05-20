@@ -1,20 +1,24 @@
+import addressDialogTemplate from "./address-dialog.html!text";
+
 class HomeController {
     /*@ngInject*/
 
     static get $inject() {
-        return ['$scope', '$http', '$filter'];
+        return ['$scope', '$http', '$filter', 'ModalService'];
     }
 
-    constructor($scope, $http, $filter) {
+    constructor($scope, $http, $filter, ModalService) {
         this.name = 'home';
         this.$http = $http;
         this.$scope = $scope;
         this.$filter = $filter;
+        this.ModalService = ModalService;
 
         this.getOrderDetails();
         this.getCoffees();
         this.getGrinds();
         this.getGeneratedOrders();
+        this.getMyAddresses();
 
         this.$scope.today = new Date();
         this.$scope.subscriptionItems = [];
@@ -120,6 +124,37 @@ class HomeController {
                 alert("Instructions updated.");
                 console.log(response);
             })
+    }
+
+    openAddressEditor(childOrder) {
+        this.ModalService.showModal({
+            template: addressDialogTemplate,
+            controller: ['$modal', 'address', 'addresses', function ($modal, address, addresses) {
+                var ctrl = this;
+
+                ctrl.address = address;
+                ctrl.addresses = addresses;
+
+                ctrl.clickClose = function (address) {
+                    $modal.close(address);
+                };
+            }],
+            controllerAs: 'ctrl',
+            inputs: {
+                address: childOrder.shippingAddress,
+                addresses: this.$scope.addresses
+            }
+        }).then(function (modal) {
+            modal.result.then(function (data) {
+                console.log(data);
+            })
+        });
+    }
+
+    getMyAddresses() {
+        this.$http.get('/api/patron/my-addresses').then((response) => {
+            this.$scope.addresses = response.data;
+        })
     }
 }
 
