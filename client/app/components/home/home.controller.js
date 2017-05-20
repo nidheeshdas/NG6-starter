@@ -17,6 +17,16 @@ class HomeController {
         this.getGeneratedOrders();
 
         this.$scope.today = new Date();
+        this.$scope.subscriptionItems = [];
+        this.$scope.frequencies = {
+            "Every 10 Days": "Every 10 Days",
+            "Every Week": "Every Week",
+            "Once a Month": "Once a Month",
+            "Every other Week": "Every other Week",
+            "Every 3 Weeks": "Every 3 Weeks",
+            "Every 4 Weeks": "Every 4 Weeks",
+            "EVERYROASTDAY": "Every Roast Day"
+        };
     }
 
     getOrderDetails() {
@@ -29,6 +39,10 @@ class HomeController {
             }
         }).then((response) => {
             this.$scope.order = response.data;
+            this.$scope.subscriptionItems = this.$scope.order.orderItems.filter(function (orderItem) {
+                return orderItem.product.productType == 'SubscriptionProduct';
+            });
+
         }, (error) => {
 
         });
@@ -52,23 +66,30 @@ class HomeController {
 
     getGeneratedOrders() {
         this.$http.get('/api/patrons/orders/getGeneratedOrdersByShopifyOrderId/?shopifyOrderId=' + window.api_params.shopifyOrderId).then((response) => {
-            this.$scope.childOrders = response.data;
-            angular.forEach(this.$scope.childOrders, (v, k) => {
-                if (+new Date() > +new Date(v.processedAt)) {
-                    v.fulfillment_status = 'fulfilled';
-                }
-                v.processedAt = this.$filter('date')(v.processedAt, 'MMMM d yyyy');
-            });
-
-            // test
-            // {
-            //    this.$scope.childOrders[0].fulfillments = [{
-            //        trackingNumber: '#fskhdufsd',
-            //        trackingUrl: 'https://google.com',
-            //        trackingCompany: 'FedEx'
-            //    }]
-            // }
+            this.processDeliveries(response);
         });
+    }
+
+    processDeliveries(response) {
+        this.$scope.childOrders = response.data;
+        this.$scope.childOrders.sort(function (a, b) {
+            return a.ordinal - b.ordinal;
+        });
+        angular.forEach(this.$scope.childOrders, (v, k) => {
+            if (+new Date() > +new Date(v.processedAt)) {
+                v.fulfillment_status = 'fulfilled';
+            }
+            v.processedAt = this.$filter('date')(v.processedAt, 'MMMM d yyyy');
+        });
+
+        // test
+        // {
+        //    this.$scope.childOrders[0].fulfillments = [{
+        //        trackingNumber: '#fskhdufsd',
+        //        trackingUrl: 'https://google.com',
+        //        trackingCompany: 'FedEx'
+        //    }]
+        // }
     }
 
     updateOrder(order) {
@@ -83,6 +104,23 @@ class HomeController {
                 });
     }
 
+    updateFrequency(orderItem) {
+        if (confirm("This will update the roast dates on all unfulfilled deliveries. Proceed?")) {
+            this.$http.post('/api/patrons/updateFrequencyForOrder?lineItemId=' + orderItem.shopifyId, orderItem.product.selectedFrequency)
+                .then((response) => {
+                    this.processDeliveries(response);
+                    alert('Subscription frequency updated.');
+                });
+        }
+    }
+
+    updateInstructions() {
+        this.$http.post('/api/patrons/updateInstructionForOrder?shopifyId=' + this.$scope.order.shopifyId, this.$scope.order.instruction)
+            .then((response) => {
+                alert("Instructions updated.");
+                console.log(response);
+            })
+    }
 }
 
 export default HomeController;

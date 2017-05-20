@@ -1,92 +1,125 @@
 <div class="btc-order-editor">
-    <div ng-if="childOrders && childOrders.length > 0">
-        <h5 class="uppercase spaced-text colored">Deliveries</h5>
+    <div class="grid__item two-thirds medium-down--one-whole">
 
-        <div class="table-wrap" style="overflow: hidden;">
-            <table class="full">
-                <thead>
-                <!--<tr>-->
-                <!--<th>Shipping Address</th>-->
-                <!--<th>Order</th>-->
-                <!--<th></th>-->
-                <!--</tr>-->
-                </thead>
-                <tbody ng-repeat="childOrder in childOrders"
-                       ng-class="{'order--fulfilled': childOrder.fulfillment_status=='fulfilled'}">
-                <tr ng-repeat="subItem in childOrder.orderItems[0].product.subItems">
-                    <td style="position: relative">
-                        <div class="order_ordinal">
-                            #{{ childOrder.ordinal }}
-                        </div>
-                        <div class="label">Ship To</div>
-                        <div class="row" style="word-wrap:break-word;">
-                            {{childOrder.shippingAddress.name}}
-                        </div>
-                        <div class="row" style="word-wrap:break-word;">
-                            {{childOrder.shippingAddress.address1}},
-                            {{childOrder.shippingAddress.address2}},
-                            {{childOrder.shippingAddress.city.cityName}}
-                        </div>
-                        <div class="row " style="word-wrap:break-word;">
-                            {{childOrder.shippingAddress.state}},
-                            {{childOrder.shippingAddress.postalCode}}
-                        </div>
-                        <div class="row form-group" style="word-wrap:break-word;">
-                            <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-                            <span>{{childOrder.shippingAddress.phone}}</span>
+        <div ng-if="childOrders && childOrders.length > 0">
+            <h5 class="uppercase spaced-text colored">Deliveries</h5>
 
-                        </div>
-                        <div ng-if="childOrder.fulfillments.length > 0" style="margin-top: 2em">
-                            <div class="label">Courier</div>
-                            <div>{{ childOrder.fulfillments[0].trackingCompany }}</div>
-                            <br/>
-                            <div class="label">Tracking ID</div>
-                            <div>
-                                <a href="{{ childOrder.fulfillments[0].trackingUrl }}"
-                                   style="text-decoration: underline;">
-                                    {{ childOrder.fulfillments[0].trackingNumber }}
-                                </a>
+            <div class="table-wrap" style="overflow: hidden;">
+                <table class="full">
+                    <thead>
+                    <!--<tr>-->
+                    <!--<th>Shipping Address</th>-->
+                    <!--<th>Order</th>-->
+                    <!--<th></th>-->
+                    <!--</tr>-->
+                    </thead>
+                    <tbody ng-repeat="childOrder in childOrders"
+                           ng-class="{'order--fulfilled': childOrder.fulfillment_status=='fulfilled'}">
+                    <tr ng-repeat="subItem in childOrder.orderItems[0].product.subItems">
+                        <td style="position: relative">
+                            <div class="order_ordinal">
+                                #{{ childOrder.ordinal }}
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="label">Coffee</div>
-                        <select ng-options="c as c.name for c in coffees track by c.id"
-                                ng-model="subItem.coffee">
-                        </select>
-                        <div class="static-info">
-                            {{ subItem.coffee.name }}
-                        </div>
-                        <br/><br class="fulfilled-hidden"/>
-                        <div class="label">Grind</div>
-                        <select ng-options="g as g.name for g in grinds track by g.id" ng-model="subItem.grind">
-                        </select>
-                        <div class="static-info">
-                            {{ subItem.grind.name }}
-                        </div>
-                        <br/><br class="fulfilled-hidden"/>
-                        <div class="label">Roast on</div>
-                        <datepicker date-disabled-weekdays="[1, 2, 4, 5, 6]" date-format="MMMM d yyyy"
-                                    date-set="{{ $parent.childOrder.processedAt | date:'MMMM d yyyy' }}"
-                                    date-min-limit="{{ today.toISOString() }}"
-                        >
-                            <input ng-model="$parent.childOrder.processedAt" type="text"/>
-                        </datepicker>
-                        <div class="static-info">
-                            {{ $parent.childOrder.processedAt }}
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <!--<button class="button button-white">Change Address</button>-->
-                        <button class="button button-white" style="float: right" ng-click="vm.updateOrder(childOrder)">
-                            Update Delivery
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                            <div class="label">Ship To</div>
+                            <div class="row" style="word-wrap:break-word;">
+                                {{childOrder.shippingAddress.name}}
+                            </div>
+                            <div class="row" style="word-wrap:break-word;">
+                                {{childOrder.shippingAddress.address1}},
+                                {{childOrder.shippingAddress.address2}},
+                                {{childOrder.shippingAddress.city.cityName}}
+                            </div>
+                            <div class="row " style="word-wrap:break-word;">
+                                {{childOrder.shippingAddress.state}},
+                                {{childOrder.shippingAddress.postalCode}}
+                            </div>
+                            <div class="row form-group" style="word-wrap:break-word;">
+                                <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                <span>{{childOrder.shippingAddress.phone}}</span>
+
+                            </div>
+                            <div ng-if="childOrder.fulfillments.length > 0" style="margin-top: 2em">
+                                <div class="label">Courier</div>
+                                <div>{{ childOrder.fulfillments[0].trackingCompany }}</div>
+                                <br/>
+                                <div class="label">Tracking ID</div>
+                                <div>
+                                    <a href="{{ childOrder.fulfillments[0].trackingUrl }}"
+                                       style="text-decoration: underline;">
+                                        {{ childOrder.fulfillments[0].trackingNumber }}
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="label">Coffee</div>
+                            <select ng-options="c as c.name for c in coffees track by c.id"
+                                    ng-model="subItem.coffee">
+                            </select>
+                            <div class="static-info">
+                                {{ subItem.coffee.name }}
+                            </div>
+                            <br/><br class="fulfilled-hidden"/>
+                            <div class="label">Grind</div>
+                            <select ng-options="g as g.name for g in grinds track by g.id" ng-model="subItem.grind">
+                            </select>
+                            <div class="static-info">
+                                {{ subItem.grind.name }}
+                            </div>
+                            <br/><br class="fulfilled-hidden"/>
+                            <div class="label">Roast on</div>
+                            <datepicker date-disabled-weekdays="[1, 2, 4, 5, 6]" date-format="MMMM d yyyy"
+                                        date-set="{{ $parent.childOrder.processedAt | date:'MMMM d yyyy' }}"
+                                        date-min-limit="{{ today.toISOString() }}"
+                            >
+                                <input ng-model="$parent.childOrder.processedAt" type="text"/>
+                            </datepicker>
+                            <div class="static-info">
+                                {{ $parent.childOrder.processedAt }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <!--<button class="button button-white">Change Address</button>-->
+                            <button class="button button-white" style="float: right"
+                                    ng-click="vm.updateOrder(childOrder)">
+                                Update Delivery
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="grid__item one-third medium-down--one-whole">
+        <div>
+            <h5 class="uppercase spaced-text colored">Instructions</h5>
+            <textarea ng-model="order.instruction"></textarea>
+            <button class="button button-white" style="float: right" ng-click="vm.updateInstructions()">
+                Update
+            </button>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div>
+            <h5 class="uppercase spaced-text colored">Frequency</h5>
+            <div ng-repeat="orderItem in subscriptionItems">
+                <p>
+                    {{ orderItem.product.numberOfDeliveries }} Delivery Subscription -
+                    {{ orderItem.product.subItems[0].coffee.name }} /
+                    {{ orderItem.product.subItems[0].grind.name }}
+                </p>
+                <select ng-options="f as n for (f, n) in frequencies"
+                        ng-model="orderItem.product.selectedFrequency"></select>
+                <button class="button button-white" style="float: right"
+                        ng-click="vm.updateFrequency(orderItem)">
+                    Update Frequency
+                </button>
+            </div>
         </div>
     </div>
 </div>

@@ -105,3 +105,14 @@ a._720kb-datepicker-calendar-day._720kb-datepicker-disabled {
 .order_ordinal + div {
     margin-top: 2em;
 }
+
+html body .btc-order-editor textarea {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    color: white;
+    /*border: 1px solid white;*/
+    font-size: 1.1em;
+}
+
+.btc-order-editor {
+    margin-left: -30px;
+}

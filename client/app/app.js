@@ -6,6 +6,7 @@ import AppComponent from "./app.component";
 // import 'angular-material/angular-material';
 // import 'normalize.css';
 // import 'bulma/css/bulma.css!';
+import "./util/modal";
 import "angularjs-datepicker";
 import "angularjs-datepicker/dist/angular-datepicker.css!";
 import Config from "./app.config";
@@ -14,6 +15,7 @@ let appModule = angular.module('app', [
     'ui.router',
     // 'ngMaterial',
     '720kb.datepicker',
+    'hj.modal',
     Components.name
 ])
     .directive('app', AppComponent)
