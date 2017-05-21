@@ -129,16 +129,21 @@ class HomeController {
     openAddressEditor(childOrder) {
         this.ModalService.showModal({
             template: addressDialogTemplate,
-            controller: ['$modal', 'address', 'addresses', function ($modal, address, addresses) {
+            showingClass: "modal-open",
+            controller: ['$modal', 'input', 'addresses', '$scope', function ($modal, input, addresses, $scope) {
                 var ctrl = this;
-                ctrl.address = address;
-                var cityName = ctrl.address.city.cityName;
-                ctrl.addresses = addresses;
+                $scope.address = input;
+                var cityName = $scope.address.city.cityName;
+                $scope.addresses = addresses;
+
+                ctrl.useThis = function (address) {
+                    $scope.address = address;
+                };
                 ctrl.save = function () {
-                    if (cityName != ctrl.address.city.cityName) {
-                        ctrl.address.city.id = null;
+                    if (cityName != $scope.address.city.cityName) {
+                        $scope.address.city.id = null;
                     }
-                    $modal.close(ctrl.address);
+                    $modal.close($scope.address);
                 };
                 ctrl.clickClose = function () {
                     $modal.close(null);
@@ -146,7 +151,7 @@ class HomeController {
             }],
             controllerAs: 'ctrl',
             inputs: {
-                address: JSON.parse(JSON.stringify(childOrder.shippingAddress)),
+                input: JSON.parse(JSON.stringify(childOrder.shippingAddress)),
                 addresses: this.$scope.addresses
             }
         }).then((modal) => {
@@ -163,6 +168,13 @@ class HomeController {
     getMyAddresses() {
         this.$http.get('/api/patrons/myaddresses').then((response) => {
             this.$scope.addresses = response.data;
+
+            this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
+            this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
+            this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
+            this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
+
+
         })
     }
 }

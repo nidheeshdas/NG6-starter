@@ -45,6 +45,7 @@
 .modal-open .modal {
     overflow-x: hidden;
     overflow-y: auto;
+    display: block;
 }
 
 .modal-dialog {
@@ -218,15 +219,21 @@
 }
 
 .fifty {
-    width: 50%;
+    width: 100%;
+}
+
+@media (min-width: 767px) {
+    .fifty {
+        width: 50%;
+    }
+
+    .pr1 {
+        padding: 0 1em 0 0;
+    }
 }
 
 .oh {
     overflow: hidden;
-}
-
-.pr1 {
-    padding: 0 1em 0 0;
 }
 
 .w100 {
@@ -235,4 +242,22 @@
 
 .mb1 {
     margin-bottom: 1em;
+}
+
+.fr {
+    float: right;
+}
+
+.err {
+    color: red;
+}
+
+input.err {
+    color: red;
+    border: 1px solid red;
+}
+
+.len-counter {
+    font-family: monospace;
+    color: #828282;
 }
