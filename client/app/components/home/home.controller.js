@@ -19,6 +19,7 @@ class HomeController {
         this.getGrinds();
         this.getGeneratedOrders();
         this.getMyAddresses();
+        this.getCountriesAndStates();
 
         this.$scope.today = new Date();
         this.$scope.subscriptionItems = [];
@@ -130,11 +131,12 @@ class HomeController {
         this.ModalService.showModal({
             template: addressDialogTemplate,
             showingClass: "modal-open",
-            controller: ['$modal', 'input', 'addresses', '$scope', function ($modal, input, addresses, $scope) {
+            controller: ['$modal', 'input', 'addresses', '$scope', 'countries', function ($modal, input, addresses, $scope, countries) {
                 var ctrl = this;
                 $scope.address = input;
                 var cityName = $scope.address.city.cityName;
                 $scope.addresses = addresses;
+                $scope.countries = countries;
 
                 ctrl.useThis = function (address) {
                     $scope.address = address;
@@ -153,7 +155,8 @@ class HomeController {
             controllerAs: 'ctrl',
             inputs: {
                 input: JSON.parse(JSON.stringify(childOrder.shippingAddress)),
-                addresses: this.$scope.addresses
+                addresses: this.$scope.addresses,
+                countries: this.$scope.countries
             }
         }).then((modal) => {
             modal.result.then((address) => {
@@ -174,8 +177,12 @@ class HomeController {
             this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
             this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
             this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
+        })
+    }
 
-
+    getCountriesAndStates() {
+        this.$http.get('/api/patrons/getCountriesAndTheirStates').then(response => {
+            this.$scope.countries = response.data;
         })
     }
 }

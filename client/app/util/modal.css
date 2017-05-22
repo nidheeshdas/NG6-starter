@@ -187,9 +187,10 @@
 .list-item {
     display: flex;
     padding: 0.5em;
-    width: 50%;
+    width: 48%;
     flex-direction: column;
     border: 1px solid #bbb;
+    margin-right: 2%;
 }
 
 /*@media all and (min-width: 40em) {*/

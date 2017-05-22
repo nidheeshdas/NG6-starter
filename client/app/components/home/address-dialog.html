@@ -44,13 +44,18 @@
                         </div>
                         <div class="fl fifty">
                             <div class="label">State</div>
-                            <input ng-model="address.state" class="w100 mb1"/>
+                            <select ng-model="address.state" class="w100 mb1"
+                                    ng-options="state for state in countries[address.country]"></select>
+                            <!--<input ng-model="address.state" class="w100 mb1"/>-->
                         </div>
                     </div>
                     <div class="oh">
                         <div class="fl fifty pr1">
                             <div class="label">Country</div>
-                            <input ng-model="address.country" class="w100 mb1"/>
+                            <select class="w100 mb1" ng-model="address.country"
+                                    ng-options="country as country for (country, states) in countries">
+                            </select>
+                            <!--<input ng-model="address.country" class="w100 mb1"/>-->
                         </div>
                         <div class="fl fifty">
                             <div class="label">Postal Code</div>
@@ -61,8 +66,7 @@
                 <div class="fl fifty">
                     <ul class="list">
                         <li class="list-item" ng-repeat="address in addresses">
-                            <h6 ng-hide="address.name">{{ address.firstName }} &nbsp; {{ address.lastName }}</h6>
-                            <h6 ng-show="address.name">{{ address.name }}</h6>
+                            <h6>{{ address.name }}</h6>
                             {{ address.street }}, {{ address.address1 }}, {{ address.address2 }} <br/>
                             {{ address.city.cityName }}, {{ address.state }}, {{ address.country }} <br/>
                             {{ address.postalCode }}
