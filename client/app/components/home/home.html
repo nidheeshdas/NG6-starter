@@ -26,12 +26,13 @@
                             </div>
                             <div class="row" style="word-wrap:break-word;">
                                 {{childOrder.shippingAddress.street}}
-                                {{childOrder.shippingAddress.address1}},
-                                {{childOrder.shippingAddress.address2}},
-                                {{childOrder.shippingAddress.city.cityName}}
+                                <br/>
+                                {{childOrder.shippingAddress.address1}}
+                                <br/>
+                                {{childOrder.shippingAddress.address2}}
                             </div>
                             <div class="row " style="word-wrap:break-word;">
-                                {{childOrder.shippingAddress.state}},
+                                {{childOrder.shippingAddress.city.cityName}}, {{childOrder.shippingAddress.state}},
                                 {{childOrder.shippingAddress.postalCode}}
                             </div>
                             <div class="row form-group" style="word-wrap:break-word;">

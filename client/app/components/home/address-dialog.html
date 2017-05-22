@@ -77,6 +77,10 @@
             </div>
 
             <div class="modal-footer">
+                <div style="float: left">
+                    <input type="checkbox" ng-model="address.updateAllAddress"/> Update addresses of all unfulfilled
+                    deliveries
+                </div>
                 <button type="button"
                         class="btn btn-default"
                         ng-click="ctrl.save()">Save

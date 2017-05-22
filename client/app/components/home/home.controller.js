@@ -144,7 +144,7 @@ class HomeController {
                 ctrl.save = function () {
                     if (cityName != $scope.address.city.cityName) {
                         $scope.address.city.id = null;
-                        $scope.address.id = null;
+                        // $scope.address.id = null;
                     }
                     $modal.close($scope.address);
                 };
@@ -173,10 +173,10 @@ class HomeController {
         this.$http.get('/api/patrons/myaddresses').then((response) => {
             this.$scope.addresses = response.data;
 
-            this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
-            this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
-            this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
-            this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
+            // this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
+            // this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
+            // this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
+            // this.$scope.addresses.push(JSON.parse(JSON.stringify(response.data[0])));
         })
     }
 
