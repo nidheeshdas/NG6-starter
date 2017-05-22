@@ -25,6 +25,7 @@
                                 {{childOrder.shippingAddress.name}}
                             </div>
                             <div class="row" style="word-wrap:break-word;">
+                                {{childOrder.shippingAddress.street}}
                                 {{childOrder.shippingAddress.address1}},
                                 {{childOrder.shippingAddress.address2}},
                                 {{childOrder.shippingAddress.city.cityName}}
@@ -107,7 +108,7 @@
         <br/>
         <br/>
         <br/>
-        <div>
+        <div ng-show="subscriptionItems.length > 0">
             <h5 class="uppercase spaced-text colored">Frequency</h5>
             <div ng-repeat="orderItem in subscriptionItems">
                 <p>

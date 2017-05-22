@@ -142,6 +142,7 @@ class HomeController {
                 ctrl.save = function () {
                     if (cityName != $scope.address.city.cityName) {
                         $scope.address.city.id = null;
+                        $scope.address.id = null;
                     }
                     $modal.close($scope.address);
                 };
@@ -158,8 +159,8 @@ class HomeController {
             modal.result.then((address) => {
                 if (address != null) {
                     console.log(address);
-                    this.$scope.order.shippingAddress = address;
-                    this.updateOrder(this.$scope.order);
+                    childOrder.shippingAddress = address;
+                    this.updateOrder(childOrder);
                 }
             })
         });

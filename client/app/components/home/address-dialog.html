@@ -12,16 +12,11 @@
 
             <div class="modal-body oh">
                 <div class="fl fifty pr1">
-                    <div class="oh">
-                        <div class="fl fifty pr1">
-                            <div class="label">First Name</div>
-                            <input ng-model="address.firstName" class="w100 mb1"/>
-                        </div>
-                        <div class="fl fifty">
-                            <div class="label">Last Name</div>
-                            <input ng-model="address.lastName" class="w100 mb1"/>
-                        </div>
-                    </div>
+                    <div class="label">Name</div>
+                    <input ng-model="address.name" class="w100 mb1"/>
+                    <div class="label">Phone</div>
+                    <input ng-model="address.phone" class="w100 mb1"/>
+
                     <div class="label" ng-class="{'err': address.street.length > 30}">
                         Address 1
                         <span class="fr len-counter">({{address.street.length}}/30)</span>
