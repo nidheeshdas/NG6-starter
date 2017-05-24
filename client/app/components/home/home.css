@@ -114,5 +114,76 @@ html body .btc-order-editor textarea {
 }
 
 .btc-order-editor {
-    margin-left: -30px;
+    /*margin-left: -30px;*/
+}
+
+.grid {
+    margin-top: 4em;
+}
+
+html body #subs_editor #app-container .app .btc-order-editor .btn-update-freq {
+    float: right;
+    width: 60%;
+    min-width: 100px;
+    padding: 0;
+    border-right: 0px;
+    background-color: #10b3c6;
+    color: white;
+    border-color: #10b3c6;
+}
+
+html body #subs_editor #app-container .app .btc-order-editor .btn-pause-resume {
+    float: right;
+    width: 40%;
+    min-width: 100px;
+    border-color: #10b3c6;
+}
+
+.tag-paused {
+    border-radius: 1em;
+    background-color: #10B3C6;
+    color: black;
+    padding: 0 0.5em;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/** select updating **/
+.select-update-wrapper {
+    overflow: hidden;
+}
+
+.select-update-wrapper select {
+    float: left;
+    width: 99%;
+    display: block;
+    position: relative;
+    min-width: 60%;
+    transition: all 0.3s ease 0s;
+}
+
+.select-update-wrapper button {
+    float: left;
+    margin: 0;
+    border-left: 0;
+    min-width: 0% !important;
+    border-radius: 0 !important;
+    width: 1%;
+    padding: 0;
+    color: transparent !important;
+    border-color: transparent !important;
+    background: transparent !important;
+}
+
+.select-update-wrapper select.ng-dirty {
+    width: 70% !important;
+    transition: all 0.3s ease 0s;
+}
+
+.select-update-wrapper select.ng-dirty + button {
+    color: white !important;
+    border-color: white !important;
+    background: #0fa5b6 !important;
+    width: 30% !important;
 }

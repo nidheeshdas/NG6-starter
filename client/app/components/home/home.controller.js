@@ -32,6 +32,15 @@ class HomeController {
             "Every 4 Weeks": "Every 4 Weeks",
             "EVERYROASTDAY": "Every Roast Day"
         };
+
+        this.$scope.mainOrderHasShipping = false;
+        this.$scope.globalGrind = {
+            id: 0,
+            name: 'Reset all grinds to...'
+        };
+        this.$scope.preferredCourier = "-- None --";
+
+        this.$scope.couriers = [this.$scope.preferredCourier, 'FedEx', 'Aramex', 'Bluedart', 'IndiaPost'];
     }
 
     getOrderDetails() {
@@ -47,7 +56,9 @@ class HomeController {
             this.$scope.subscriptionItems = this.$scope.order.orderItems.filter(function (orderItem) {
                 return orderItem.product.productType == 'SubscriptionProduct';
             });
-
+            if (this.$scope.subscriptionItems.length < this.$scope.order.orderItems) {
+                this.$scope.mainOrderHasShipping = true;
+            }
         }, (error) => {
 
         });
@@ -102,6 +113,9 @@ class HomeController {
         v.processedAt = new Date(order.processedAt + ' 15:30').toISOString();
         this.$http.put('/api/patrons/orders', v)
             .then((response) => {
+                    if (response && response.data && response.data.length > 0) {
+                        this.processDeliveries(response);
+                    }
                     alert("Order successfully updated.");
                 },
                 (error) => {
@@ -184,6 +198,25 @@ class HomeController {
         this.$http.get('/api/patrons/getCountriesAndTheirStates').then(response => {
             this.$scope.countries = response.data;
         })
+    }
+
+    togglePause(orderItem) {
+        let pause = orderItem.paused ? 'false' : 'true';
+        this.$http.post('/api/patrons/pauseGeneratedOrder?lineItemId=' + orderItem.shopifyId + '&isPause=' + pause, orderItem.product.selectedFrequency)
+            .then((response) => {
+                this.processDeliveries(response);
+                alert('Subscription has been ' + (orderItem.paused ? 'resumed.' : 'paused.'));
+                orderItem.paused = !orderItem.paused;
+            });
+    }
+
+    setPreferredCourier(courier) {
+        this.$http.post('/api/patrons/setPreferredCourier?preferredCourier=' + courier + '&customerId' + this.$scope.order.customer.id)
+            .then(res => {
+                alert('Your preferred courier set to ' + courier);
+            }, () => {
+                alert('Failed to set preferred courier');
+            });
     }
 }
 
