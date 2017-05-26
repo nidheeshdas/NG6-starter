@@ -65,7 +65,7 @@ class HomeController {
     }
 
     getCoffees() {
-        this.$http.get('/api/patrons/coffees').then((response) => {
+        this.$http.get('/api/patrons/limitedCoffeeList').then((response) => {
             if (response.data)
                 this.$scope.coffees = response.data;
         }, (error) => {
@@ -123,11 +123,12 @@ class HomeController {
                 });
     }
 
-    updateFrequency(orderItem) {
+    updateFrequency(orderItem, frm) {
         if (confirm("This will update the roast dates on all unfulfilled deliveries. Proceed?")) {
             this.$http.post('/api/patrons/updateFrequencyForOrder?lineItemId=' + orderItem.shopifyId, orderItem.product.selectedFrequency)
                 .then((response) => {
                     this.processDeliveries(response);
+                    frm.freqSel.$setPristine();
                     alert('Subscription frequency updated.');
                 });
         }
@@ -211,12 +212,22 @@ class HomeController {
     }
 
     setPreferredCourier(courier) {
-        this.$http.post('/api/patrons/setPreferredCourier?preferredCourier=' + courier + '&customerId' + this.$scope.order.customer.id)
+        this.$http.post('/api/patrons/setPreferredCourier?preferredCourier=' + courier + '&appCustomerId=' + this.$scope.order.customer.id)
             .then(res => {
                 alert('Your preferred courier set to ' + courier);
+                this.$scope.commonForm.preferredCourier.$setPristine();
             }, () => {
                 alert('Failed to set preferred courier');
             });
+    }
+
+    setGlobalGrind(grind, orderItemShopifyId, frm) {
+        this.$http.post('/api/patrons/changeGrindForAllDelivery?grindId=' + grind.id + '&orderItemShopifyId=' + orderItemShopifyId)
+            .then((res) => {
+                frm.globalGrind.$setPristine();
+                alert('Grind of all unfulfilled deliveries updated to ' + grind.name + '.');
+                this.getGeneratedOrders();
+            })
     }
 }
 

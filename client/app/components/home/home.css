@@ -160,6 +160,7 @@ html body #subs_editor #app-container .app .btc-order-editor .btn-pause-resume {
     display: block;
     position: relative;
     min-width: 60%;
+    background-color: transparent !important;
     transition: all 0.3s ease 0s;
 }
 

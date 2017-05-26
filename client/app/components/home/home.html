@@ -1,31 +1,32 @@
 <div class=" btc-order-editor">
     <div class="grid">
         <div class="grid__item one-half medium-down--one-whole">
-            <div>
-                <div class="label">Preferred Courier</div>
-                <div class="select-update-wrapper">
-                    <select ng-model="preferredCourier" ng-options="courier for courier in couriers"></select>
-                    <button class="button button-white" ng-click="vm.setPreferredCourier(preferredCourier)">Update
-                    </button>
-                </div>
-            </div>
-            <br/>
-            <div ng-show="subscriptionItems.length > 0">
-                <div class="label">Grind</div>
-                <div class="select-update-wrapper">
-                    <select ng-model="globalGrind" ng-options="g as g.name for g in grinds track by g.id"></select>
-                    <button class="button button-white" ng-click="vm.setGlobalGrind(preferredCourier)">Update</button>
-                </div>
-            </div>
-            <br/>
-            <div ng-show="mainOrderHasShipping">
-                <div class="label">Tracking</div>
+            <form name="commonForm">
                 <div>
-                    <a target="_blank" href="{{ order.fulfillments[0].tracking_url }}">
-                        {{ order.fulfillments[0].tracking_url }} - {{ order.fulfillments[0].tracking_company }}
-                    </a>
+                    <div class="label">Preferred Courier</div>
+                    <div class="select-update-wrapper">
+                        <select ng-model="order.customer.preferredCourier" name="preferredCourier"
+                                ng-options="courier for courier in couriers"></select>
+                        <button class="button button-white"
+                                ng-click="vm.setPreferredCourier(order.customer.preferredCourier)">Update
+                        </button>
+                    </div>
                 </div>
-            </div>
+                <!--<br/>-->
+                <!--<div ng-show="subscriptionItems.length > 0">-->
+                <!--<div class="label">Reset grinds of all unfulfilled deliveries</div>-->
+
+                <!--</div>-->
+                <br/>
+                <div ng-show="mainOrderHasShipping">
+                    <div class="label">Tracking</div>
+                    <div>
+                        <a target="_blank" href="{{ order.fulfillments[0].tracking_url }}">
+                            {{ order.fulfillments[0].tracking_url }} - {{ order.fulfillments[0].tracking_company }}
+                        </a>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="grid__item one-half medium-down--one-whole">
             <div ng-show="mainOrderHasShipping">
@@ -164,7 +165,7 @@
             <br/>
             <br/>
             <div ng-show="subscriptionItems.length > 0">
-                <h5 class="uppercase spaced-text colored">Frequency</h5>
+                <h5 class="uppercase spaced-text colored">Subscriptions</h5>
                 <div ng-repeat="orderItem in subscriptionItems">
                     <p>
                         {{ orderItem.product.numberOfDeliveries }} Delivery Subscription -
@@ -172,17 +173,30 @@
                         {{ orderItem.product.subItems[0].grind.name }}
                         <span class="tag-paused" ng-show="orderItem.paused">Paused</span>
                     </p>
-                    <select ng-options="f as n for (f, n) in frequencies"
-                            ng-model="orderItem.product.selectedFrequency"></select>
-
-                    <button class="button button-white btn-pause-resume" style="float: right"
+                    <div class="select-update-wrapper" ng-form="freqForm">
+                        <div class="label">Frequency</div>
+                        <select ng-options="f as n for (f, n) in frequencies" name="freqSel"
+                                ng-model="orderItem.product.selectedFrequency"></select>
+                        <button class="button button-white" ng-click="vm.updateFrequency(orderItem, freqForm)">
+                            Update
+                        </button>
+                    </div>
+                    <br/>
+                    <div class="select-update-wrapper" ng-form="globalGrindFrom">
+                        <div class="label">Reset grind to...</div>
+                        <select ng-model="globalGrind" ng-options="g as g.name for g in grinds track by g.id"
+                                name="globalGrind"></select>
+                        <button class="button button-white"
+                                ng-click="vm.setGlobalGrind(globalGrind, orderItem.shopifyId, globalGrindFrom)">
+                            Update
+                        </button>
+                    </div>
+                    <br/>
+                    <button class="button button-white w100"
                             ng-click="vm.togglePause(orderItem)">
-                        {{ orderItem.paused ? 'Resume' : 'Pause' }}
+                        {{ orderItem.paused ? 'Resume Subscription' : 'Pause Subscription' }}
                     </button>
-                    <button class="button button-white btn-update-freq" style="float: right"
-                            ng-click="vm.updateFrequency(orderItem)">
-                        Update Frequency
-                    </button>
+
                 </div>
             </div>
         </div>
