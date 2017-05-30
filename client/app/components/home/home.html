@@ -18,7 +18,7 @@
 
                 <!--</div>-->
                 <br/>
-                <div ng-show="mainOrderHasShipping">
+                <div ng-show="mainOrderHasShipping && order.fulfillments[0].tracking_url && order.fulfillments[0].tracking_company">
                     <div class="label">Tracking</div>
                     <div>
                         <a target="_blank" href="{{ order.fulfillments[0].tracking_url }}">
@@ -36,9 +36,9 @@
                 </div>
                 <div class="row" style="word-wrap:break-word;">
                     {{order.shippingAddress.street}}
-                    <br/>
+                    <br ng-show="order.shippingAddress.street"/>
                     {{order.shippingAddress.address1}}
-                    <br/>
+                    <br ng-show="order.shippingAddress.address1"/>
                     {{order.shippingAddress.address2}}
                 </div>
                 <div class="row " style="word-wrap:break-word;">
@@ -81,9 +81,9 @@
                                 </div>
                                 <div class="row" style="word-wrap:break-word;">
                                     {{childOrder.shippingAddress.street}}
-                                    <br/>
+                                    <br ng-show="childOrder.shippingAddress.street"/>
                                     {{childOrder.shippingAddress.address1}}
-                                    <br/>
+                                    <br ng-show="childOrder.shippingAddress.address1"/>
                                     {{childOrder.shippingAddress.address2}}
                                 </div>
                                 <div class="row " style="word-wrap:break-word;">

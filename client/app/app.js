@@ -56,3 +56,9 @@ export function __unload() {
     container.remove();
     document.body.appendChild(noAngularDOM.cloneNode(true));
 }
+
+setInterval(function () {
+    if (!window.jQuery && window.jQuery1111) {
+        window.jQuery = window.$ = window.jQuery1111;
+    }
+}, 1500);

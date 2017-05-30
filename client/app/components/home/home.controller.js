@@ -56,7 +56,7 @@ class HomeController {
             this.$scope.subscriptionItems = this.$scope.order.orderItems.filter(function (orderItem) {
                 return orderItem.product.productType == 'SubscriptionProduct';
             });
-            if (this.$scope.subscriptionItems.length < this.$scope.order.orderItems) {
+            if (this.$scope.subscriptionItems.length < this.$scope.order.orderItems.length) {
                 this.$scope.mainOrderHasShipping = true;
             }
         }, (error) => {
@@ -90,6 +90,11 @@ class HomeController {
         this.$scope.childOrders = response.data;
         this.$scope.childOrders.sort(function (a, b) {
             return a.ordinal - b.ordinal;
+        });
+        this.$scope.childOrders.forEach(c => {
+            c.orderItems[0].product.subItems = c.orderItems[0].product.subItems.filter(si => {
+                return si.type == 'coffee';
+            });
         });
         angular.forEach(this.$scope.childOrders, (v, k) => {
             if (+new Date() > +new Date(v.processedAt)) {
