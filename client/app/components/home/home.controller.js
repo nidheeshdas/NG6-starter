@@ -53,11 +53,13 @@ class HomeController {
             }
         }).then((response) => {
             this.$scope.order = response.data;
-            this.$scope.subscriptionItems = this.$scope.order.orderItems.filter(function (orderItem) {
-                return orderItem.product.productType == 'SubscriptionProduct';
-            });
-            if (this.$scope.subscriptionItems.length < this.$scope.order.orderItems.length) {
-                this.$scope.mainOrderHasShipping = true;
+            if (this.$scope.order.orderItems) {
+                this.$scope.subscriptionItems = this.$scope.order.orderItems.filter(function (orderItem) {
+                    return orderItem.product.productType == 'SubscriptionProduct';
+                });
+                if (this.$scope.subscriptionItems.length < this.$scope.order.orderItems.length) {
+                    this.$scope.mainOrderHasShipping = true;
+                }
             }
         }, (error) => {
 
